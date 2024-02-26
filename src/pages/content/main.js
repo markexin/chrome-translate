@@ -60,11 +60,15 @@ function appIncon () {
     }
 
     parentDiv.setAttribute('class', 'gpt-translate')
-    console.log(document.getSelection().toString())
 
     parentDiv.setAttribute('style', `display: ${!show ? 'none' : 'block'}; position: absolute; left: ${right}px; top: ${offSet(focusNode).top + 30}px; width: 30px; height: 30px; background: black; color: white; text-align: center; line-height: 30px; border-radius: 3px; cursor: pointer;`)
     const p = document.createElement('p')
     p.innerText = '译'
+    p.setAttribute('data-text', document.getSelection().toString())
+    p.addEventListener('click', function (e) {
+      // 此处调用接口
+      console.log('text is: ', e.target.getAttribute('data-text'))
+    })
     parentDiv.appendChild(p)
     body.appendChild(parentDiv)
   } catch (error) {
@@ -75,6 +79,5 @@ function appIncon () {
 
 document.addEventListener('selectionchange', debounce(appIncon, 1000))
 document.addEventListener('mouseup', function (event) {
-  console.log(event)
   right = event.x
 })

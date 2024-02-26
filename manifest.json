@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "gpt-translate",
-  "description": "chrome translate extension",
+  "description": "chrome tran extension",
   "version": "0.0.1",
   "options_page": "options.html",
   "browser_action": {
