@@ -8,13 +8,13 @@
 
 ## 使用
 1. 加载插件后启用插件
-<img src="./assets/1.png" width="100" height="100" />
+<img src="./assets/1.png" />
 
 2. 输入 GPT KEY，我很穷，没办法提供免费的服务，使用者自己买吧
-<img src="./assets/2.png" width="100" height="100" />
+<img src="./assets/2.png" />
 
 3. 划词点击翻译即可
-<img src="./assets/3.png" width="100" height="100" />
+<img src="./assets/3.png" />
 
 
 ## 开发
