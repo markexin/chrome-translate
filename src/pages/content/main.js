@@ -61,6 +61,7 @@ window.onload = function () {
   parentDiv.setAttribute('style', `display: none; position: absolute; left: ${right}px; top: ${top}px; background: black; color: white; text-align: center; line-height: 30px; border-radius: 3px; cursor: pointer;`)
   const p = document.createElement('p')
   p.innerText = '译'
+  p.setAttribute('style', 'margin: 0;')
   p.addEventListener('click', function (e) {
     // eslint-disable-next-line no-undef
     chrome.runtime.sendMessage({
