@@ -30,54 +30,47 @@ function offSet (curEle) {
   return { left: totalLeft, top: totalTop }
 }
 
-function findExit () {
-  const domList = document.getElementsByClassName('gpt-translate')
-  if (domList.length >= 1) {
-    while (domList[0].hasChildNodes()) {
-      domList[0].removeChild(domList[0].firstChild)
-    }
-    return true
-  }
-  return false
-}
-
 let right = 0
+let top = 0
 
 function appIncon () {
   try {
-    const focusNode = document.getSelection().focusNode.parentElement
-    const body = document.body
-    let parentDiv
-    if (findExit()) {
-      parentDiv = document.getElementsByClassName('gpt-translate')[0]
-    } else {
-      parentDiv = document.createElement('div')
+    const storeTextDom = document.getElementsByClassName('gpt-translate')[0]
+    const focusNode = document.getSelection()
+    if (!focusNode.toString()) {
+      storeTextDom.setAttribute('style', `display: none; position: absolute; left: ${right}px; top: ${top}px; width: 30px; height: 30px; background: black; color: white; text-align: center; line-height: 30px; border-radius: 3px; cursor: pointer;`)
+      return
     }
-
-    let show = true
-    if (!document.getSelection().toString()) {
-      show = false
-    }
-
-    parentDiv.setAttribute('class', 'gpt-translate')
-
-    parentDiv.setAttribute('style', `display: ${!show ? 'none' : 'block'}; position: absolute; left: ${right}px; top: ${offSet(focusNode).top + 30}px; width: 30px; height: 30px; background: black; color: white; text-align: center; line-height: 30px; border-radius: 3px; cursor: pointer;`)
-    const p = document.createElement('p')
-    p.innerText = '译'
-    p.setAttribute('data-text', document.getSelection().toString())
-    p.addEventListener('click', function (e) {
-      // 此处调用接口
-      console.log('text is: ', e.target.getAttribute('data-text'))
-    })
-    parentDiv.appendChild(p)
-    body.appendChild(parentDiv)
+    storeTextDom.firstChild.setAttribute('data-text', focusNode.toString())
+    top = offSet(focusNode.focusNode.parentElement).top + 30
+    storeTextDom.setAttribute('style', `display: block; position: absolute; left: ${right}px; top: ${top}px; width: 30px; height: 30px; background: black; color: white; text-align: center; line-height: 30px; border-radius: 3px; cursor: pointer;`)
   } catch (error) {
-    findExit()
     console.warn('plugins error', error)
   }
 }
 
-document.addEventListener('selectionchange', debounce(appIncon, 1000))
+document.addEventListener('selectionchange', debounce(appIncon, 200))
 document.addEventListener('mouseup', function (event) {
   right = event.x
 })
+
+window.onload = function () {
+  const body = document.body
+  const parentDiv = document.createElement('div')
+  parentDiv.setAttribute('class', 'gpt-translate')
+  parentDiv.setAttribute('style', `display: none; position: absolute; left: ${right}px; top: ${top}px; background: black; color: white; text-align: center; line-height: 30px; border-radius: 3px; cursor: pointer;`)
+  const p = document.createElement('p')
+  p.innerText = '译'
+  p.addEventListener('click', function (e) {
+    // eslint-disable-next-line no-undef
+    chrome.runtime.sendMessage({
+      messageType: 'ajax',
+      text: e.target.getAttribute('data-text')
+    },
+    function (res) {
+      alert(res)
+    })
+  })
+  parentDiv.appendChild(p)
+  body.appendChild(parentDiv)
+}

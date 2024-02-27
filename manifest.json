@@ -14,9 +14,11 @@
   },
   "background": {
     "page": "background.html",
-    "persistent": false
+    "persistent": true
   },
-  "permissions": ["http://*/*", "https://*/*", "tabs", "contextMenus", "notifications", "webRequestBlocking", "storage", "activeTab", "declarativeContent"],
+  "permissions": [
+    "*://*/*"
+  ],
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
     "js": ["js/content.js"],
