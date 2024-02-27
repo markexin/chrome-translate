@@ -16,6 +16,9 @@
 3. 划词点击翻译即可
 <img src="./assets/3.png" />
 
+4. 翻译效果展示
+<img src="./assets/4.png" />
+
 
 ## 开发
 
