@@ -4,4 +4,3 @@
 
 基于 OpenAI 定制化chrome插件，保证流畅的翻译效果 
 
-sk-ObPQFlJp7Y5FIAcXzxUcZoUgg77H5kPga1pvZGo218M8hWKa
