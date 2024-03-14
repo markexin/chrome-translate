@@ -78,7 +78,7 @@ window.onload = function () {
   // 创建翻译面板
   const translatePanel = document.createElement('div')
   translatePanel.setAttribute('id', 'translate-panel')
-  translatePanel.setAttribute('style', 'font-size: 18px; text-align: left; padding: 20px; min-width: 300px; min-height: 200px; display:none; position: absolute; right: 0px; top: 0px; z-index: 9999; background: #000000; color: #ffff;')
+  translatePanel.setAttribute('style', `font-size: 18px; text-align: left; padding: 20px; min-width: 300px; min-height: 200px; display:none; position: absolute; right: 0px; top: ${window.scrollY}px; z-index: 9999; background: #000000; color: #ffff;`)
   translatePanel.addEventListener('dblclick', function (e) {
     translatePanel.innerHTML = ''
     translatePanel.style.display = 'none'
@@ -87,7 +87,7 @@ window.onload = function () {
   // 创建翻译的输入框
   const translateInput = document.createElement('input')
   translateInput.setAttribute('type', 'text')
-  translateInput.setAttribute('style', 'display: none; font-size: 24px; padding: 10px; min-width: 500px; min-height: 100px; display:none; position: absolute; right: 50%; transform: translateX(50%); top: 100px; z-index: 9999; background: #000000; color: #ffff;')
+  translateInput.setAttribute('style', `width: 500px; display: none; font-size: 24px; padding: 10px; min-width: 500px; min-height: 100px; display:none; position: absolute; right: 50%; transform: translateX(50%); top: ${window.scrollY + 100}px; z-index: 9999; background: #000000; color: #ffff;`)
 
   body.appendChild(translatePanel)
   body.appendChild(translateInput)
@@ -106,6 +106,8 @@ window.onload = function () {
     if (event.metaKey && event.keyCode === 13) {
       // eslint-disable-next-line no-undef
       translateInput.style.display = 'block'
+      translateInput.style.top = `${window.scrollY + 100}px`
+      translatePanel.style.top = `${window.scrollY}px`
     }
   }, false)
 
