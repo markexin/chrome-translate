@@ -91,14 +91,19 @@ window.onload = function () {
 
   body.appendChild(translatePanel)
   body.appendChild(translateInput)
+
+  // 监听键盘取消事件
+  document.addEventListener('keydown', function (event) {
+    if (event.keyCode === 27) { // ESC key
+      // eslint-disable-next-line no-undef
+      translateInput.style.display = 'none'
+    }
+  })
+
   // 监听键盘事件
   document.addEventListener('keydown', function (event) {
-    // 检查是否是Mac环境下的Command键（在Windows/Linux环境下则是Ctrl键）
-    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
-    const cmdKey = isMac ? event.metaKey : event.ctrlKey
-
     // 检查按下的键是否是数字1
-    if (event.keyCode === 49 && cmdKey) {
+    if (event.metaKey && event.keyCode === 13) {
       // eslint-disable-next-line no-undef
       translateInput.style.display = 'block'
     }
