@@ -69,9 +69,55 @@ window.onload = function () {
       text: e.target.getAttribute('data-text')
     },
     function (res) {
-      alert(res)
+      document.getElementById('translate-panel').innerHTML = res
+      document.getElementById('translate-panel').style.display = 'block'
     })
   })
   parentDiv.appendChild(p)
   body.appendChild(parentDiv)
+  // 创建翻译面板
+  const translatePanel = document.createElement('div')
+  translatePanel.setAttribute('id', 'translate-panel')
+  translatePanel.setAttribute('style', 'font-size: 18px; text-align: left; padding: 20px; min-width: 300px; min-height: 200px; display:none; position: absolute; right: 0px; top: 0px; z-index: 9999; background: #000000; color: #ffff;')
+  translatePanel.addEventListener('dblclick', function (e) {
+    translatePanel.innerHTML = ''
+    translatePanel.style.display = 'none'
+    e.stopPropagation()
+  })
+  // 创建翻译的输入框
+  const translateInput = document.createElement('input')
+  translateInput.setAttribute('type', 'text')
+  translateInput.setAttribute('style', 'display: none; font-size: 24px; padding: 10px; min-width: 500px; min-height: 100px; display:none; position: absolute; right: 50%; transform: translateX(50%); top: 100px; z-index: 9999; background: #000000; color: #ffff;')
+
+  body.appendChild(translatePanel)
+  body.appendChild(translateInput)
+  // 监听键盘事件
+  document.addEventListener('keydown', function (event) {
+    // 检查是否是Mac环境下的Command键（在Windows/Linux环境下则是Ctrl键）
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
+    const cmdKey = isMac ? event.metaKey : event.ctrlKey
+
+    // 检查按下的键是否是数字1
+    if (event.keyCode === 49 && cmdKey) {
+      // eslint-disable-next-line no-undef
+      translateInput.style.display = 'block'
+    }
+  }, false)
+
+  // 监听输入框回车事件
+  translateInput.addEventListener('keydown', function (e) {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      translateInput.style.display = 'none'
+      // eslint-disable-next-line no-undef
+      chrome.runtime.sendMessage({
+        messageType: 'ajax',
+        text: e.target.value
+      },
+      function (res) {
+        document.getElementById('translate-panel').innerHTML = res
+        document.getElementById('translate-panel').style.display = 'block'
+      })
+    }
+  })
 }
