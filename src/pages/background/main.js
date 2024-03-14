@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.messageType === 'ajax') {
     const data = {
       model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: `你是一个专业的翻译，请帮我翻译以下内容：${request.text}` }],
+      messages: [{ role: 'user', content: `你是一个专业的中英文翻译，如果是中文，请帮我翻译成对应的英文，如果是英文，请帮我翻译成对应的中文，现在请帮我翻译以下内容：${request.text}` }],
       temperature: 0.7
     }
     fetch('https://api.chatanywhere.tech/v1/chat/completions', {
