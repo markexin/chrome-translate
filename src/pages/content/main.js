@@ -87,7 +87,7 @@ window.onload = function () {
   // 创建翻译的输入框
   const translateInput = document.createElement('input')
   translateInput.setAttribute('type', 'text')
-  translateInput.setAttribute('style', `width: 500px; display: none; font-size: 24px; padding: 10px; min-width: 500px; min-height: 100px; display:none; position: absolute; right: 50%; transform: translateX(50%); top: ${window.scrollY + 100}px; z-index: 9999; background: #000000; color: #ffff;`)
+  translateInput.setAttribute('style', `width: 500px; font-size: 24px; padding: 10px; min-width: 500px; min-height: 100px; display:none; position: absolute; right: 50%; transform: translateX(50%); top: ${window.scrollY + 100}px; z-index: 9999; background: #000000; color: #ffff;`)
 
   body.appendChild(translatePanel)
   body.appendChild(translateInput)
@@ -102,10 +102,15 @@ window.onload = function () {
 
   // 监听键盘事件
   document.addEventListener('keydown', function (event) {
-    // 检查按下的键是否是数字1
-    if (event.metaKey && event.keyCode === 13) {
-      // eslint-disable-next-line no-undef
+    // 检查按下的键是 S 键，并且同时按下了 Command 和 Shift 键
+    if (event.key === 's' && event.metaKey && event.shiftKey) {
+      // 阻止默认行为，以防止浏览器触发保存页面的行为
+      event.preventDefault()
+
+      // 在此处执行你想要的操作
+      console.log('start input')
       translateInput.style.display = 'block'
+      // translateInput.style.cssText = 'display: block !important;'
       translateInput.style.top = `${window.scrollY + 100}px`
       translatePanel.style.top = `${window.scrollY}px`
     }
